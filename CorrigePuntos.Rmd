@@ -67,3 +67,8 @@ evalua_df <- evalua_df[order(evalua_df$apellidos), ]
 
 write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
 ```
+
+#Preguntas:
+- Podemos observar que no todos los alumnos utilizaron el nombre "puntos.txt"
+- El archivo .xlsx contiene 4 variables mas la ruta del archivo 
+- Se puede ver que que todos han incluido el archivo de .txt aunque hayan variado el nombre respecto al que se pide, en cambio hay gente que no ha subido el certificado del .pdf
