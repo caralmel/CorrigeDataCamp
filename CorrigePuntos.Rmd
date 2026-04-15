@@ -8,3 +8,22 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# Librerias
+```{r, include=FALSE}
+library(dplyr)
+library(readxl)
+library(writexl)
+
+```
+
+# Descomprimir fichero
+```{r}
+archivo_zip <- "2025-26 Tractament de les dades Gr.A-T (36423)-Tarea Intermediate R(Datacamp)-3281647.zip"
+carpeta_entregas <- "entregas_descomprimidas"
+
+unzip(archivo_zip, exdir = carpeta_entregas)
+```
+
+
+
