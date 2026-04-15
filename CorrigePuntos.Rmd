@@ -36,3 +36,34 @@ ficheros_justificantes <- list.files(path = carpeta_entregas,pattern = "(?i)\\.p
                                      recursive = TRUE,full.names = TRUE)
 
 ```
+
+# Procesar y crear dataframe con la info
+```{r}
+lista_resultados <- list()
+for (ruta in ficheros_puntos){
+  partes <- strsplit(ruta, "/")[[1]]
+  alumno <- partes[2]
+  
+  lineas <- readLines(ruta,warn = FALSE)
+  linea_puntos <- lineas[grep("[0-9]", lineas)][1]
+  puntos_valor <- as.numeric(gsub("[^0-9]", "", linea_puntos)) #elimna cosas extra
+  
+  fila <- data.frame(
+    apellidos = alumno,
+    puntos = as.numeric(puntos_valor),
+    NomFile = basename(ruta),
+    Puntos_texto = linea_puntos
+  )
+  
+lista_resultados[[ruta]] <- fila
+}
+
+
+evalua_df <- do.call(rbind, lista_resultados)
+#do.call -> junta todo, porque el rbind no puede
+
+
+evalua_df <- evalua_df[order(evalua_df$apellidos), ]
+
+write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
+```
