@@ -25,5 +25,14 @@ carpeta_entregas <- "entregas_descomprimidas"
 unzip(archivo_zip, exdir = carpeta_entregas)
 ```
 
+# Buscar archivos puntos.txt
+```{r echo=FALSE}
+ficheros_puntos <- list.files(path = carpeta_entregas,pattern = "(?i)puntos.*\\.txt$", 
+                              recursive = TRUE,full.names = TRUE)
 
+#recursive es necesario para que acceda a la info de las subcarpetas
 
+ficheros_justificantes <- list.files(path = carpeta_entregas,pattern = "(?i)\\.pdf$",
+                                     recursive = TRUE,full.names = TRUE)
+
+```
