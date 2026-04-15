@@ -68,7 +68,22 @@ evalua_df <- evalua_df[order(evalua_df$apellidos), ]
 write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
 ```
 
-#Preguntas:
+# Preguntas:
 - Podemos observar que no todos los alumnos utilizaron el nombre "puntos.txt"
 - El archivo .xlsx contiene 4 variables mas la ruta del archivo 
 - Se puede ver que que todos han incluido el archivo de .txt aunque hayan variado el nombre respecto al que se pide, en cambio hay gente que no ha subido el certificado del .pdf
+
+# Combinar los dos dataframes
+```{r}
+df <- read_xlsx("AlumnosTD25_26.xlsx")
+names(df)
+
+evalua_df$apellidos_limpios <- gsub("_.*","",evalua_df$apellidos)
+df$apellidos_unidos <- paste(df$`Apellido(s)`, df$Nombre, sep = ", ")
+
+resultado_final <- df %>%
+  left_join(evalua_df, by = c("apellidos_unidos" = "apellidos_limpios"))
+
+write_xlsx(resultado_final, "AlumnosNotas.xlsx")
+```
+
