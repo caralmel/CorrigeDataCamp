@@ -1,15 +1,17 @@
 ---
-title: "CorrigePuntos"
+title: "Corrige Puntos"
 author: "Carlos Albiach Melgar"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Librerias
+
 ```{r, include=FALSE}
 library(dplyr)
 library(readxl)
@@ -40,6 +42,7 @@ ficheros_justificantes <- list.files(path = carpeta_entregas,pattern = "(?i)\\.p
 # Procesar y crear dataframe con la info
 ```{r}
 lista_resultados <- list()
+
 for (ruta in ficheros_puntos){
   partes <- strsplit(ruta, "/")[[1]]
   alumno <- partes[2]
@@ -62,6 +65,8 @@ lista_resultados[[ruta]] <- fila
 evalua_df <- do.call(rbind, lista_resultados)
 #do.call -> junta todo, porque el rbind no puede
 
+rownames(evalua_df) <- NULL
+
 
 evalua_df <- evalua_df[order(evalua_df$apellidos), ]
 
@@ -76,7 +81,6 @@ write_xlsx(evalua_df, "NotasRIntermedio.xlsx")
 # Combinar los dos dataframes
 ```{r}
 df <- read_xlsx("AlumnosTD25_26.xlsx")
-names(df)
 
 evalua_df$apellidos_limpios <- gsub("_.*","",evalua_df$apellidos)
 df$apellidos_unidos <- paste(df$`Apellido(s)`, df$Nombre, sep = ", ")
